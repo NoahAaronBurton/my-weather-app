@@ -1,8 +1,8 @@
 var APIKey = 'dfbba4a30298f58de574bb93ae5e3065';
 
-var cityCol = document.getElementById('city-col');
+
 var dateRow = document.getElementById('date-row');
-var iconCol = document.getElementById('icon-col');
+
 
 var cityIconCol = document.getElementById('city-icon-col')
 
@@ -10,9 +10,10 @@ var cityIconCol = document.getElementById('city-icon-col')
 
 var searchButton = document.getElementById('search-btn')
 
+
 function getCityData() {
-    var cityInput = document.getElementById('search-field').value;
-    var noSpaces = cityInput.replace(/\s/g, '+'); // api takes '+' for spaces for request url
+    var cityInput = document.getElementById('search-field');
+    var noSpaces = cityInput.value.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + noSpaces + "&appid=" + APIKey;
 
@@ -28,6 +29,10 @@ function getCityData() {
     .then(function (data){
         console.log(data);
 
+        //clear previous city data before loading in more
+        cityIconCol.innerHTML = '';
+        dateRow.innerHTML = '';
+        
         // to do: display weather data to placeholder 
         
         //city heading and date
@@ -58,13 +63,16 @@ function getCityData() {
        makeIconImg.id = 'weather-icon'
        cityIconCol.appendChild(makeIconImg);
         
+        // temp
+
+       
 
         // to do: print .name to basic well area
 
 
        
     }) 
-
+    cityInput.value = ''; // clear search field
 };
 
 

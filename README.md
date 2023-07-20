@@ -96,6 +96,7 @@ Project Link: [https://github.com/NoahAaronBurton/my-weather-app](https://github
 
 * [OpenWeather](https://openweathermap.org/) for use of their API for current weather and forecast data for all cities on this app.
 * []() Chat GPT for ..... See code comments for details.
+* [Rory McCrossan on stackoverflow](https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon) for their answer for displaying weather icons
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

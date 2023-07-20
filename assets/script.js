@@ -1,12 +1,16 @@
 var APIKey = 'dfbba4a30298f58de574bb93ae5e3065';
 
-var cityHeadingRow = document.getElementById('city-heading-row');
+var cityCol = document.getElementById('city-col');
+var dateRow = document.getElementById('date-row');
+var iconCol = document.getElementById('icon-col');
+
+var cityIconCol = document.getElementById('city-icon-col')
 
 // TODO: validate user input for city
 
 var searchButton = document.getElementById('search-btn')
 
-function getCityName() {
+function getCityData() {
     var cityInput = document.getElementById('search-field').value;
     var noSpaces = cityInput.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
@@ -29,9 +33,9 @@ function getCityName() {
         //city heading and date
         var makeCityHeading = document.createElement('h2');
         var makeDateHeading = document.createElement('h4');
+        
         var unix_timestamp = data.dt;
         var localTime = unixToLocal(unix_timestamp);
-        
         function unixToLocal(unix_timestamp) { // chat gpt helped me with this function for formatting dates
             // Convert to milliseconds by multiplying by 1000
             let date = new Date(unix_timestamp * 1000);
@@ -39,15 +43,20 @@ function getCityName() {
             let dateTimeFormat = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
             return dateTimeFormat.format(date);
         }
-        
-        
         makeCityHeading.textContent = data.name;
         makeDateHeading.textContent = localTime;
-        cityHeadingRow.appendChild(makeCityHeading);
-        cityHeadingRow.appendChild(makeDateHeading);
+        cityIconCol.appendChild(makeCityHeading);
+        dateRow.appendChild(makeDateHeading);
 
+       // icon
+       var iconId = data.weather[0].icon; // reference to icon ID
+       var iconUrl = 'http://openweathermap.org/img/w/' + iconId + '.png'
        
-
+       var makeIconImg = document.createElement('img');
+       console.log(iconUrl);
+       makeIconImg.src = iconUrl; 
+       makeIconImg.id = 'weather-icon'
+       cityIconCol.appendChild(makeIconImg);
         
 
         // to do: print .name to basic well area
@@ -59,7 +68,7 @@ function getCityName() {
 };
 
 
-searchButton.addEventListener('click', getCityName);
+searchButton.addEventListener('click', getCityData);
 
 
 

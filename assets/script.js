@@ -3,6 +3,7 @@ var APIKey = 'dfbba4a30298f58de574bb93ae5e3065';
 
 var dateRow = document.getElementById('date-row');
 var tempRow = document.getElementById('temp-row');
+var humidRow = document.getElementById('humid-row');
 
 
 var cityIconCol = document.getElementById('city-icon-col')
@@ -34,6 +35,7 @@ function getCityData() {
         cityIconCol.innerHTML = '';
         dateRow.innerHTML = '';
         tempRow.innerHTML ='';
+        humidRow.innerHTML = '';
         // to do: display weather data to placeholder 
         
         //city heading and date
@@ -51,6 +53,7 @@ function getCityData() {
         }
         makeCityHeading.textContent = data.name;
         makeDateHeading.textContent = localTime;
+        makeDateHeading.style.padding = '10px';
         cityIconCol.appendChild(makeCityHeading);
         dateRow.appendChild(makeDateHeading);
 
@@ -70,7 +73,11 @@ function getCityData() {
         makeTempHeading.style.padding = '10px';
         tempRow.appendChild(makeTempHeading);
 
-       
+       //humidity
+       var makeHumidHeading = document.createElement('h5');
+       makeHumidHeading.textContent = 'Hudmidity: ' + data.main.humidity + '%';
+       makeHumidHeading.style.padding = '10px';
+       humidRow.appendChild(makeHumidHeading);
 
         // to do: print .name to basic well area
 

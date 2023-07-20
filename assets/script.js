@@ -2,6 +2,7 @@ var APIKey = 'dfbba4a30298f58de574bb93ae5e3065';
 
 
 var dateRow = document.getElementById('date-row');
+var tempRow = document.getElementById('temp-row');
 
 
 var cityIconCol = document.getElementById('city-icon-col')
@@ -15,7 +16,7 @@ function getCityData() {
     var cityInput = document.getElementById('search-field');
     var noSpaces = cityInput.value.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + noSpaces + "&appid=" + APIKey;
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + noSpaces + '&units=imperial' + "&appid=" + APIKey;
 
     fetch(queryURL)
     .then(function(response) {
@@ -32,7 +33,7 @@ function getCityData() {
         //clear previous city data before loading in more
         cityIconCol.innerHTML = '';
         dateRow.innerHTML = '';
-        
+        tempRow.innerHTML ='';
         // to do: display weather data to placeholder 
         
         //city heading and date
@@ -64,6 +65,10 @@ function getCityData() {
        cityIconCol.appendChild(makeIconImg);
         
         // temp
+        var makeTempHeading = document.createElement('h5');
+        makeTempHeading.textContent = data.main.temp + ' °F';
+        makeTempHeading.style.padding = '10px';
+        tempRow.appendChild(makeTempHeading);
 
        
 

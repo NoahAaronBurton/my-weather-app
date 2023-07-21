@@ -18,19 +18,42 @@ function getCityData() {
     var cityInput = document.getElementById('search-field');
     var noSpaces = cityInput.value.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + noSpaces + '&units=imperial' + "&appid=" + APIKey;
+    // First, get the geocoding data for the city
+    var geoURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + noSpaces + "&limit=1&appid=" + APIKey;
 
-    fetch(queryURL)
+    fetch(geoURL)
     .then(function(response) {
-        if (response.status === 404) {
+        if (!response.ok) {
             alert('There was a problem with your search. Please check the spelling of your query.')
+            throw new Error('Problem with geocoding API');
         } else {
             return response.json();
         }
-        
     })
     .then(function (data){
-        console.log(data);
+        // Now that we have the geocoding data, we can make the second API call
+        if (data.length === 0) {
+            alert('No results found. Please check the spelling of your query.');
+            throw new Error('No geocoding data found');
+        }
+        var lat = data[0].lat;
+        var lon = data[0].lon;
+        
+        
+
+        // Then, get the weather data for the coordinates
+        var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + '&units=imperial' + "&appid=" + APIKey;
+
+        fetch(weatherURL)
+        .then(function(response) {
+            if (response.status === 404) {
+                alert('There was a problem with your search. Please check the spelling of your query.')
+            } else {
+                return response.json();
+            }
+        })
+        .then(function (data){
+            console.log(data);
 
         //clear previous city data before loading in more
         cityIconCol.innerHTML = '';
@@ -64,7 +87,7 @@ function getCityData() {
        var iconUrl = 'http://openweathermap.org/img/w/' + iconId + '.png'
        
        var makeIconImg = document.createElement('img');
-       console.log(iconUrl);
+       //console.log(iconUrl);
        makeIconImg.src = iconUrl; 
        makeIconImg.id = 'weather-icon'
        cityIconCol.appendChild(makeIconImg);
@@ -89,12 +112,13 @@ function getCityData() {
 
 
         // to do: print .name to basic well area
-
-
-       
-    }) 
+        }) 
+        
+    });
+    
     cityInput.value = ''; // clear search field
 };
+
 
 // displays salt lake city weather when first opened
 function placeholderData(){
@@ -110,7 +134,7 @@ function placeholderData(){
         
     })
     .then(function (data){
-        console.log(data);
+        //console.log(data);
 
         //clear previous city data before loading in more
         cityIconCol.innerHTML = '';
@@ -144,7 +168,7 @@ function placeholderData(){
        var iconUrl = 'http://openweathermap.org/img/w/' + iconId + '.png'
        
        var makeIconImg = document.createElement('img');
-       console.log(iconUrl);
+       //console.log(iconUrl);
        makeIconImg.src = iconUrl; 
        makeIconImg.id = 'weather-icon'
        cityIconCol.appendChild(makeIconImg);
@@ -165,13 +189,7 @@ function placeholderData(){
        var makeWindHeading = document.createElement('h5');
        makeWindHeading.textContent = 'Wind speed: ' + data.wind.speed + ' MPH';
        makeWindHeading.style.padding = '10px';
-       windRow.appendChild(makeWindHeading);
-
-
-        // to do: print .name to basic well area
-
-
-       
+       windRow.appendChild(makeWindHeading);  
     }) 
 
 }

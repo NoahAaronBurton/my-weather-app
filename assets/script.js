@@ -11,7 +11,6 @@ var forecastRow = document.getElementById('forecast-row');
 
 var cityIconCol = document.getElementById('city-icon-col')
 
-// TODO: validate user input for city
 
 var searchButton = document.getElementById('search-btn')
 
@@ -120,7 +119,7 @@ function getCityData() {
         // to do: print .name to basic well area
 
         // make forecast cards
-        // TODO: get imperial units
+       
         var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
         console.log(forecastURL);
         fetch(forecastURL)
@@ -210,6 +209,8 @@ function placeholderData(){
         
     })
     .then(function (data){
+        var lat = data.coord.lat;
+        var lon = data.coord.lon;
         //console.log(data);
 
         //clear previous city data before loading in more
@@ -268,6 +269,75 @@ function placeholderData(){
        windRow.appendChild(makeWindHeading);  
 
        // TODO: place holder cards ( copy and paste from main function)
+       // make forecast cards
+       
+       var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
+       
+        fetch(forecastURL)
+       .then(function (response){
+           return response.json();
+       })
+       .then(function(data) {
+           console.log(data);
+            
+           // clear prev cards
+           forecastRow.innerHTML = '';
+           // create cards
+           var makeCard = document.createElement('div');
+           makeCard.className= 'card';
+           var previousDate= '';
+           for (var i = 0; i < data.list.length; i++) {
+               // get date ref 
+               var date = new Date(data.list[i].dt * 1000); // chat gpt helped me with the next three lines
+               var day = date.getDate();
+               var hour = date.getHours();
+               // get icon url
+               var iconForecastId = data.list[i].weather[0].icon; // weather array has one item for each day; icon is inside
+               var iconForecastUrl = 'http://openweathermap.org/img/w/' + iconForecastId + '.png'
+               // temp
+               var forecastTemp = data.list[i].main.temp + ' °F';
+               // wind
+               var forecastWind = data.list[i].wind.speed + ' MPH wind speed';
+               //humid
+               var forecastHumid = data.list[i].main.humidity + '% Humidity'
+               // check if the hour is noon and the day has changed... only way to get different days from the API
+               if (hour === 12 && day !== previousDate) {
+
+                   // create a new column and card for each day
+                   var makeCol = document.createElement('div');
+                   makeCol.className = 'col';
+                   var makeCard = document.createElement('div');
+                   makeCard.className= 'card';
+                   var makeForecastIcon = document.createElement('img');
+                   makeForecastIcon.className = 'forecast-icon'
+                   makeForecastIcon.src = iconForecastUrl;
+                   var makeForecastTempHeading = document.createElement('h6');
+                   makeForecastTempHeading.textContent = forecastTemp;
+                   makeForecastTempHeading.style.padding = '5px';
+                   var makeForecastWind = document.createElement('h6');
+                   makeForecastWind.textContent = forecastWind;
+                   makeForecastWind.style.padding = '5px'
+                   var makeForecastHumid = document.createElement('h6');
+                   makeForecastHumid.textContent = forecastHumid;
+                   makeForecastHumid.style.padding = '5px';
+                   
+                   var heading = document.createElement('h5');
+                   heading.textContent = date.toDateString(); // format the date as a string
+                   heading.className = 'card-header';
+                   // to do: append temp, wind, and humidity
+                   makeCard.appendChild(heading);
+                   makeCard.appendChild(makeForecastIcon);
+                   makeCol.appendChild(makeCard);
+                   forecastRow.appendChild(makeCol);
+                   makeCard.appendChild(makeForecastTempHeading);
+                   makeCard.appendChild(makeForecastWind);
+                   makeCard.appendChild(makeForecastHumid);
+
+                   previousDate = day;
+               }
+           }
+           
+       })
         
 
     }) 

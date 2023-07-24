@@ -27,7 +27,7 @@ function displayHistory () {
     for (var i = 0; i <searchHistory.length; i++) {
         var listItem = document.createElement('a');
         listItem.textContent =searchHistory[i];
-        // TODO: add styling to list items
+        listItem.className = 'list-group-item list-group-item-action';
         listItem.addEventListener('click', function (){
             cityInput.value = this.textContent;
             getCityData();// trigger new search if a list item is clicked

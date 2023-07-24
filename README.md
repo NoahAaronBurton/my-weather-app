@@ -97,6 +97,7 @@ Project Link: [https://github.com/NoahAaronBurton/my-weather-app](https://github
 * [OpenWeather](https://openweathermap.org/) for use of their API for current weather and forecast data for all cities on this app.
 * []() Chat GPT for ..... See code comments for details.
 * [Rory McCrossan on stackoverflow](https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon) for their answer for displaying weather icons
+* [Christian C. Salvado on stackoverflow] (https://stackoverflow.com/questions/2100758/javascript-or-variable-assignment-explanation) for their answer on default values for variables with the || operator
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

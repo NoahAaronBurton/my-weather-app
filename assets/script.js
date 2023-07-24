@@ -13,8 +13,29 @@ var cityIconCol = document.getElementById('city-icon-col')
 
 
 var searchButton = document.getElementById('search-btn')
+var cityInput = document.getElementById('search-field');
+
+// history
 
 
+function displayHistory () {
+    var listElement = document.getElementById('history'); // ref to target list element
+    var searchHistory = JSON.parse(localStorage.getItem('search-history')) || []; // look for history in local storage OR have it be empty if there is no data
+    listElement.innerHTML = '';
+    
+
+    for (var i = 0; i <searchHistory.length; i++) {
+        var listItem = document.createElement('a');
+        listItem.textContent =searchHistory[i];
+        // TODO: add styling to list items
+        listItem.addEventListener('click', function (){
+            cityInput.value = this.textContent;
+            getCityData();// trigger new search if a list item is clicked
+        })
+        listElement.appendChild(listItem);
+    }
+
+}
 
 function unixToLocal(unix_timestamp) { // chat gpt helped me with this function for formatting dates
     // Convert to milliseconds by multiplying by 1000
@@ -25,7 +46,8 @@ function unixToLocal(unix_timestamp) { // chat gpt helped me with this function 
 }
 
 function getCityData() {
-    var cityInput = document.getElementById('search-field');
+   // var cityInput = document.getElementById('search-field');
+    
     var noSpaces = cityInput.value.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
     // First, get the geocoding data for the city
@@ -41,7 +63,18 @@ function getCityData() {
         }
     })
     .then(function (data){
+        var searchHistory = JSON.parse(localStorage.getItem('search-history')) || [];
+        //console.log(data[0].name);
+       
+        // adds check for duplicates for the search history
+        if (!searchHistory.includes(data[0].name)){
+            searchHistory.push(data[0].name);
+            localStorage.setItem('search-history', JSON.stringify(searchHistory));
+        }
         
+        displayHistory(); // update history
+        cityInput.value = ''; // clear search field
+
         // Now that we have the geocoding data, we can make the second API call. Chat GPT helped me with this second call.
         if (data.length === 0) {
             alert('No results found. Please check the spelling of your query.');
@@ -190,8 +223,8 @@ function getCityData() {
         }) 
         
     });
+   
     
-    cityInput.value = ''; // clear search field
 };
 
 
@@ -278,7 +311,7 @@ function placeholderData(){
            return response.json();
        })
        .then(function(data) {
-           console.log(data);
+           //console.log(data);
             
            // clear prev cards
            forecastRow.innerHTML = '';
@@ -349,3 +382,4 @@ searchButton.addEventListener('click', getCityData);
 
 
 
+document.addEventListener('DOMContentLoaded', displayHistory); // wait til doc load before getting history. this helps with duplicates

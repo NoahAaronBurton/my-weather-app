@@ -44,7 +44,7 @@ function getCityData() {
     var noSpaces = cityInput.value.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
     // First, get the geocoding data for the city
-    var searchQuery = "http://api.openweathermap.org/geo/1.0/direct?q=" + noSpaces + "&limit=1&appid=" + APIKey;
+    var searchQuery = "https://api.openweathermap.org/geo/1.0/direct?q=" + noSpaces + "&limit=1&appid=" + APIKey;
 
     fetch(searchQuery)
     .then(function(response) {
@@ -78,7 +78,7 @@ function getCityData() {
         
 
         // Then, get the weather data for the coordinates
-        var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + '&units=imperial' + "&appid=" + APIKey;
+        var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + '&units=imperial' + "&appid=" + APIKey;
 
         fetch(weatherURL)
         .then(function(response) {
@@ -114,7 +114,7 @@ function getCityData() {
 
        // icon
        var iconId = data.weather[0].icon; // reference to icon ID
-       var iconUrl = 'http://openweathermap.org/img/w/' + iconId + '.png'
+       var iconUrl = 'https://openweathermap.org/img/w/' + iconId + '.png'
        
        var makeIconImg = document.createElement('img');
        makeIconImg.src = iconUrl; 
@@ -140,7 +140,7 @@ function getCityData() {
        windRow.appendChild(makeWindHeading);
 
         // make forecast cards
-        var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
+        var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
         console.log(forecastURL);
         fetch(forecastURL)
         .then(function (response){
@@ -161,7 +161,7 @@ function getCityData() {
                 var hour = date.getHours();
                 // get icon url
                 var iconForecastId = data.list[i].weather[0].icon; // weather array has one item for each day; icon is inside
-                var iconForecastUrl = 'http://openweathermap.org/img/w/' + iconForecastId + '.png'
+                var iconForecastUrl = 'https://openweathermap.org/img/w/' + iconForecastId + '.png'
                 // temp
                 var forecastTemp = data.list[i].main.temp + ' °F';
                 // wind
@@ -217,7 +217,7 @@ function getCityData() {
 
 // displays salt lake city weather when first opened
 function placeholderData(){
-    var initQueryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + 'salt+lake+city' + '&units=imperial' + "&appid=" + APIKey;
+    var initQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + 'salt+lake+city' + '&units=imperial' + "&appid=" + APIKey;
     
     fetch(initQueryURL)
     .then(function(response) {
@@ -262,7 +262,7 @@ function placeholderData(){
 
        // icon
        var iconId = data.weather[0].icon; // reference to icon ID
-       var iconUrl = 'http://openweathermap.org/img/w/' + iconId + '.png'
+       var iconUrl = 'https://openweathermap.org/img/w/' + iconId + '.png'
        
        var makeIconImg = document.createElement('img');
        //console.log(iconUrl);
@@ -291,7 +291,7 @@ function placeholderData(){
 
        // make forecast cards
        
-       var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
+       var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
        
         fetch(forecastURL)
        .then(function (response){
@@ -313,7 +313,7 @@ function placeholderData(){
                var hour = date.getHours();
                // get icon url
                var iconForecastId = data.list[i].weather[0].icon; // weather array has one item for each day; icon is inside
-               var iconForecastUrl = 'http://openweathermap.org/img/w/' + iconForecastId + '.png'
+               var iconForecastUrl = 'https://openweathermap.org/img/w/' + iconForecastId + '.png'
                // temp
                var forecastTemp = data.list[i].main.temp + ' °F';
                // wind

@@ -29,10 +29,10 @@
     
   </a>
 
-<h3 align="center">Work Day Schedule</h3>
+<h3 align="center">My Weather App</h3>
 
   <p align="center">
-    descr here
+    Current Weather and Five-Day Forecast
     <br />
     <a href="https://github.com/NoahAaronBurton/my-weather-app"><strong>Explore the docs »</strong></a>
     .
@@ -65,7 +65,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](./assets/imgs/screenshot.png)
 
-<p>Use this site to keep track of your work day. Your entries will be saved to local storage when you click the blue save button.</p>
+<p>Search for a city to receive it's current weather data and a five day forecast. Your searches will be stored in the history, even between sessions. Weather data provided by OpenWeather API.</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -95,7 +95,7 @@ Project Link: [https://github.com/NoahAaronBurton/my-weather-app](https://github
 ## Acknowledgments
 
 * [OpenWeather](https://openweathermap.org/) for use of their API for current weather and forecast data for all cities on this app.
-*  Chat GPT for ..... See code comments for details.
+*  Chat GPT for some code snippets. See code comments for details.
 * [Rory McCrossan on stackoverflow](https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon) for their answer for displaying weather icons.
 * [Christian C. Salvado on stackoverflow](https://stackoverflow.com/questions/2100758/javascript-or-variable-assignment-explanation) for their answer on default values for variables with the || operator
 
@@ -117,7 +117,7 @@ Project Link: [https://github.com/NoahAaronBurton/my-weather-app](https://github
 [license-url]: https://github.com/NoahAaronBurton/my-weather-app/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: ./Assets/screenshot.png
+[product-screenshot]: ./assets/imgs/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB

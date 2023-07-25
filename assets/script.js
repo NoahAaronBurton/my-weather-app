@@ -1,6 +1,5 @@
 var APIKey = 'dfbba4a30298f58de574bb93ae5e3065';
 
-
 var dateRow = document.getElementById('date-row');
 var tempRow = document.getElementById('temp-row');
 var humidRow = document.getElementById('humid-row');
@@ -8,16 +7,12 @@ var windRow = document.getElementById('wind-row');
 
 var forecastRow = document.getElementById('forecast-row');
 
-
 var cityIconCol = document.getElementById('city-icon-col')
-
 
 var searchButton = document.getElementById('search-btn')
 var cityInput = document.getElementById('search-field');
 
 // history
-
-
 function displayHistory () {
     var listElement = document.getElementById('history'); // ref to target list element
     var searchHistory = JSON.parse(localStorage.getItem('search-history')) || []; // look for history in local storage OR have it be empty if there is no data
@@ -45,9 +40,7 @@ function unixToLocal(unix_timestamp) { // chat gpt helped me with this function 
     return dateTimeFormat.format(date);
 }
 
-function getCityData() {
-   // var cityInput = document.getElementById('search-field');
-    
+function getCityData() { 
     var noSpaces = cityInput.value.replace(/\s/g, '+'); // api takes '+' for spaces for request url
 
     // First, get the geocoding data for the city
@@ -83,7 +76,6 @@ function getCityData() {
         var lat = data[0].lat;
         var lon = data[0].lon;
         
-        //console.log(data);
 
         // Then, get the weather data for the coordinates
         var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + '&units=imperial' + "&appid=" + APIKey;
@@ -125,7 +117,6 @@ function getCityData() {
        var iconUrl = 'http://openweathermap.org/img/w/' + iconId + '.png'
        
        var makeIconImg = document.createElement('img');
-       //console.log(iconUrl);
        makeIconImg.src = iconUrl; 
        makeIconImg.id = 'weather-icon'
        cityIconCol.appendChild(makeIconImg);
@@ -148,11 +139,7 @@ function getCityData() {
        makeWindHeading.style.padding = '10px';
        windRow.appendChild(makeWindHeading);
 
-
-        // to do: print .name to basic well area
-
         // make forecast cards
-       
         var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
         console.log(forecastURL);
         fetch(forecastURL)
@@ -205,7 +192,7 @@ function getCityData() {
                     var heading = document.createElement('h5');
                     heading.textContent = date.toDateString(); // format the date as a string
                     heading.className = 'card-header';
-                    // to do: append temp, wind, and humidity
+                    
                     makeCard.appendChild(heading);
                     makeCard.appendChild(makeForecastIcon);
                     makeCol.appendChild(makeCard);
@@ -244,7 +231,7 @@ function placeholderData(){
     .then(function (data){
         var lat = data.coord.lat;
         var lon = data.coord.lon;
-        //console.log(data);
+
 
         //clear previous city data before loading in more
         cityIconCol.innerHTML = '';
@@ -252,7 +239,7 @@ function placeholderData(){
         tempRow.innerHTML ='';
         humidRow.innerHTML = '';
         windRow.innerHTML = '';
-        // to do: display weather data to placeholder 
+
         
         //city heading and date
         var makeCityHeading = document.createElement('h2');
@@ -301,7 +288,7 @@ function placeholderData(){
        makeWindHeading.style.padding = '10px';
        windRow.appendChild(makeWindHeading);  
 
-       // TODO: place holder cards ( copy and paste from main function)
+
        // make forecast cards
        
        var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat+ '&lon=' + lon + '&units=imperial' + '&appid=' + APIKey;
